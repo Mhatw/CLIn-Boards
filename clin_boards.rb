@@ -11,8 +11,8 @@ include Validations
 class ClinBoards
   def initialize
     # Complete this
-    @@file = File.read('store.json')
-    @@data_hash = JSON.parse(@@file)
+    # @@file = File.read('store.json')
+    # @@data_hash = JSON.parse(@@file)
     @principal_board = Board.new
     
   end
