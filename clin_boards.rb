@@ -1,4 +1,3 @@
-
 require "json"
 require "terminal-table"
 require_relative "get_input"
@@ -6,13 +5,13 @@ require_relative "board"
 require_relative "validations"
 include GetInput
 include Validations
-# print data_hash
 
+$global_data = JSON.parse(File.read('store.json'))
+# p "###############"
+# $global_data.each { |n| pp n if n["id"] == 1 }
 class ClinBoards
   def initialize
     # Complete this
-    # @@file = File.read('store.json')
-    # @@data_hash = JSON.parse(@@file)
     @principal_board = Board.new
     
   end
@@ -34,17 +33,23 @@ class ClinBoards
         @principal_board.create
 
       elsif @action.include? "show"
-        @principal_board.show_board_details(@action)
+        id = GetInput.get_id(@action)
+        Validations.valid_list_id(id) == true ? @principal_board.show_board_details(id) : (puts "please enter a valid ID")
+
+        
 
       elsif @action.include? "update"
-        @principal_board.update_board(@action)
+        id = GetInput.get_id(@action)
+        Validations.valid_list_id(id) == true ? @principal_board.update_board(id) : (puts "please enter a valid ID")
+        
 
       elsif @action.include? "delete"
-        @principal_board.delete_board(@action)
+        id = GetInput.get_id(@action)
+        Validations.valid_list_id(id) == true ? @principal_board.delete_board(id) : (puts "please enter a valid ID")
+        
 
       else
         puts "please type good" #poner un mensaje mas piola
-        @action = GetInput.get_input("> ")
       end
 
       GetInput.get_action_board

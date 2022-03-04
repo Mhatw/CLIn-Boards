@@ -14,6 +14,6 @@ module GetInput
   end
 
   def get_id(data)
-    data.match(/\d+/)[0]
+    data.match(/\d+/).nil? ? "no" : data.match(/\d+/)[0]
   end
 end
