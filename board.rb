@@ -1,9 +1,11 @@
 require_relative 'list'
+require 'json'
 
 class Board
   
   def initialize
-
+    puts "hola"
+    @board_id = $global_data.size
   end
   
   def create
@@ -13,6 +15,37 @@ class Board
     description_name = GetInput.get_input("")
     # transform in hash and push
 
+    params_map = {}
+    params_map["id"] = @board_id.next
+    params_map["name"] = board_name
+    params_map["description"] = description_name
+    params_map["lists"] = [{"id"=>@board_id.next, "name"=>"", "cards"=>[]}]
+
+
+
+
+
+    # p $global_data[0]["lists"]
+
+
+
+
+    # file = File.read('store.json')
+    # data_hash = JSON.parse(file)
+    $global_data.push(params_map)
+    $global_data
+
+    # json = JSON.pretty_generate(data_hash)
+    # File.open("prueba.json","w") do |f|
+    # f.write(json)
+    # end
+
+
+
+
+
+
+
     show_board
   end
 
@@ -21,7 +54,7 @@ class Board
     board.title = "CLIn Boards"
     board.headings = ['ID', 'Name', 'Description', 'List(#cards)']
     board.rows = $global_data.map do |pl, ga = pl["lists"].map do |a|
-      a["name"] + "(" + a["cards"].size.to_s + ")"end|
+      a["name"] + ("(" + a["cards"].size.to_s + ")") if !a["cards"].empty? end|
       [pl["id"], pl["name"], pl["description"], ga.join(", ")]
     end
     puts board
