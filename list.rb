@@ -1,10 +1,10 @@
 require_relative "get_input"
 class List
-
+  
   def initialize(id)
     @id_list = id.to_i - 1
-    $global_data[@id_list]["lists"].empty? ? (puts "\n#{"-"*36}\nyou don't have lists\nplease create-list\n#{"-"*36}\n\n") : show_list
-    start_list
+    $global_data[@id_list]["lists"].empty? ? GetInput.empty_message : show_list
+    start_list    
     # @pos = ""
     # $global_data.each { |n| @pos = n if n["id"] == id.to_i }
     # @pos
@@ -55,18 +55,21 @@ class List
       elsif @action.include? "update-list"
        
         list_action = GetInput.get_list_action(@action)
-        Validations.valid_list_name(list_action, @id_list) == true ? update_list(list_action) : (puts "please enter a valid LISTNAME")
+        Validations.valid_list_name(list_action, @id_list) ? update_list(list_action) : (puts "please enter a valid LISTNAME")
         
         
       elsif @action.include? "delete-list"
         
         list_action = GetInput.get_list_action(@action)
-        Validations.valid_list_name(list_action, @id_list) == true ? delete_list : (puts "please enter a valid LISTNAME")
+        Validations.valid_list_name(list_action, @id_list) ? delete_list : (puts "please enter a valid LISTNAME")
       
-      elsif @action.include? "create-card"
+      elsif @action == "create-card"
+        $global_data[@id_list]["lists"].size.positive? ? create_card : GetInput.empty_message
+      
+      elsif @action.include? "create-c"
         
         list_action = GetInput.get_id(@action)
-        Validations.valid_list_name(list_action, @id_list) == true ? create_card : (puts "please enter a valid CARD ID")
+        Validations.valid_list_name(list_action, @id_list) ? create_card : (puts "please enter a valid CARD ID")
         #tengo que validar id de card
       else
         puts "please type good" #poner un mensaje mas piola
@@ -78,8 +81,31 @@ class List
   end
 
   def create_card
-
+    arr = []
+    $global_data[@id_list]["lists"].each {|n| arr.push(n["name"])}
+    puts "Select a list: \n#{arr.join(" | ")}"
+    create_card_action = GetInput.get_input("> ")
+    validation = Validations.valid_name_card(arr, create_card_action)
+    validation ? create_card_2(create_card_action) : GetInput.empty_card_message
   end
+
+  def create_card_2(action)
+    params_map = {}
+    params_map["id"] = 1
+    print "Title: "
+    params_map["title"] = GetInput.get_input("")
+    print "Members: "
+    params_map["members"] = GetInput.get_input("").split(", ")
+    print "Labels: "
+    params_map["labels"] = GetInput.get_input("").split(", ")
+    print "Due Date: "
+    params_map["due_date"] = GetInput.get_input("")
+    params_map["checklist"] = []
+    $global_data[@id_list]["lists"].each { |n| n["cards"].push(params_map) if n["name"] == action  }
+    show_list
+  end
+
+  
 
   def create_list
     puts "\n\ncreate list action"

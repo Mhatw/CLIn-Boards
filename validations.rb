@@ -13,6 +13,16 @@ module Validations
     valid
   end
 
-  
+  def valid_card_(action, id_list)
+    valid = false
+    $global_data[id_list]["lists"].each { |n| valid = true if n["name"] == action }
+    valid
+  end
+
+  def valid_name_card(arr, action)
+    valid = false
+    arr.each { |n| valid = true if n == action }
+    valid
+  end
 
 end
