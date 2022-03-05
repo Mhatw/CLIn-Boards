@@ -13,7 +13,17 @@ module GetInput
     puts "Board options: create | show ID | update ID | delete ID\nexit"
   end
 
-  def get_id(data)
-    data.match(/\d+/).nil? ? "no" : data.match(/\d+/)[0]
+  def get_action_lists
+    puts "List options: create-list | update-list LISTNAME | delete-list LISTNAME\nCard options: create-card | checklist ID | update-card ID | delete-card ID\nback"
   end
+
+  def get_id(data)
+    data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s(\d)$/).nil? ? "no" : data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s(\d)$/)[1]
+  end
+
+  def get_list_action(data)
+    data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s([a-zA-Z]+)$/).nil? ? "no" : data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s([a-zA-Z]+)$/)[1]
+
+  end
+
 end

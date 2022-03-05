@@ -4,8 +4,7 @@ require 'json'
 class Board
   
   def initialize
-    puts "hola"
-    @board_id = $global_data.size
+    
   end
   
   def create
@@ -14,38 +13,17 @@ class Board
     print "Description: "
     description_name = GetInput.get_input("")
     # transform in hash and push
-
     params_map = {}
-    params_map["id"] = @board_id.next
+    params_map["id"] = $global_data.size.next
     params_map["name"] = board_name
     params_map["description"] = description_name
-    params_map["lists"] = [{"id"=>@board_id.next, "name"=>"", "cards"=>[]}]
-
-
-
-
-
-    # p $global_data[0]["lists"]
-
-
-
-
-    # file = File.read('store.json')
-    # data_hash = JSON.parse(file)
+    params_map["lists"] = []
     $global_data.push(params_map)
     $global_data
-
     # json = JSON.pretty_generate(data_hash)
     # File.open("prueba.json","w") do |f|
     # f.write(json)
     # end
-
-
-
-
-
-
-
     show_board
   end
 
@@ -63,10 +41,12 @@ class Board
   def show_board_details(id)
     puts "show_board_details"
     List.new(id)
+    show_board
+
 
   end
 
-  def update_board(id)    
+  def update_board(id)
     print "Name: "
     board_name = GetInput.get_input("")
     print "Description: "

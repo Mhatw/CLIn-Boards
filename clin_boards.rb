@@ -7,7 +7,9 @@ include GetInput
 include Validations
 
 $global_data = JSON.parse(File.read('store.json'))
-# p "###############"
+p "###############"
+p $global_data[0]["lists"].size.next
+# $global_data[@id_list]["lists"].size.next
 # $global_data.each { |n| pp n if n["id"] == 1 }
 class ClinBoards
   def initialize
@@ -29,7 +31,7 @@ class ClinBoards
   def until_action
     until @action == "exit"
 
-      if @action.include? "create"
+      if @action == "create"
         @principal_board.create
 
       elsif @action.include? "show"
