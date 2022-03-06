@@ -41,6 +41,7 @@ class Board
   def show_board_details(id)
     puts "show_board_details"
     List.new(id)
+    
     show_board
 
 

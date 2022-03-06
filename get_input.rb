@@ -30,12 +30,13 @@ module GetInput
   end
 
   def get_list_action(data)
-    data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s([a-zA-Z]+)$/).nil? ? "no" : data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s([a-zA-Z]+)$/)[1]
+    data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s(.+)$/).nil? ? "no" : data.match(/^[a-zA-Z]+-?[a-zA-Z]+\s(.+)$/)[1]
   end
 
   def get_card_count(action, id_list)
     puts "#################################"
     value = []
+
     $global_data[id_list]["lists"].each { |n| (puts n["cards"]["id"]) if n["name"] == action  }
 
     # p value
