@@ -1,6 +1,5 @@
 require_relative "get_input"
 require_relative "checklist"
-require_relative "cards"
 
 class List
   
@@ -71,9 +70,14 @@ class List
         $global_data[@id_list]["lists"].size.positive? ? create_card : GetInput.empty_message
       
       elsif @action.include? "checklist"
-        
         list_action = GetInput.get_id(@action)
-        Validations.valid_id_card(list_action, @id_list) ? Checklist.new : (puts "please enter a valid CARD ID")
+        count = ""
+        $global_data[@id_list]["lists"].each { |n| count = [n["id"],n["name"], $global_data[@id_list]["lists"].index(n) ] if lalistaa(n, list_action) == true }
+        p count
+        !count.empty? ? Checklist.new(@id_list, list_action, count) : (puts "please enter a valid CARD ID")
+        show_list
+        # list_action = GetInput.get_id(@action)
+        # Validations.valid_id_card(list_action, @id_list) ? Checklist.new(@id_list) : (puts "please enter a valid CARD ID")
         #tengo que validar id de card
       elsif @action.include? "update-card"
       

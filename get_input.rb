@@ -17,6 +17,10 @@ module GetInput
     puts "List options: create-list | update-list LISTNAME | delete-list LISTNAME\nCard options: create-card | checklist ID | update-card ID | delete-card ID\nback"
   end
 
+  def get_action_checklist
+    puts "Checklist options: add | toggle INDEX | delete INDEX\nback"
+  end
+
   def empty_message
     (puts "\n#{"-"*36}\nyou don't have lists\nplease create-list\n#{"-"*36}\n\n")
   end
