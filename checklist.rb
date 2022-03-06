@@ -8,7 +8,7 @@ class Checklist
     show
     GetInput.get_action_checklist
     until_checklist
-    
+
 
   end
 
@@ -23,14 +23,20 @@ class Checklist
         
       elsif @action.include? "toggle"
       theindex = GetInput.get_id(@action)
-      # if theindex.to_i <= $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"].size 
-      #   toggle(theindex)
-      # else
-      #   puts "please enter a valid INDEX"
-      # end
+      if theindex.to_i <= $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"].size 
+        toggle(theindex)
+      else
+        puts "please enter a valid INDEX"
+      end
 
       elsif @action.include? "delete"
-        p "hola"
+        theindex = GetInput.get_id(@action)
+        if theindex.to_i <= $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"].size 
+          delete_ck(theindex)
+        else
+          puts "please enter a valid INDEX"
+        end
+
       else
         puts "please type good"
       end
@@ -41,7 +47,14 @@ class Checklist
 
   end
   def toggle(theindex)
-    p $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"][theindex]
+    varr = $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"][theindex.to_i-1]["completed"] 
+    varr == true ? varr = false : varr = true 
+    $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"][theindex.to_i-1]["completed"] = varr
+    show
+  end
+  def delete_ck(theindex)
+    $global_data[@id_list]["lists"][@count[2]]["cards"][@dato]["checklist"][theindex.to_i-1].delete_if {|n| true == true}
+    show
   end
   
   def add_checklist
